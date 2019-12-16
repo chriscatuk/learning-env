@@ -56,7 +56,9 @@ output "VPN-Credentials" {
 #    SECURITY GROUP    #
 ########################
 resource "aws_security_group" "vpn" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id      = aws_vpc.vpc.id
+  name        = "${var.vpcname}_vpn-bastion"
+  description = "${var.vpcname} vpn-bastion vpn access"
 
   ingress {
     from_port        = 500
