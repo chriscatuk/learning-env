@@ -77,3 +77,42 @@ output "Jenkins_Worker_Hostname" {
   #  sensitive = true
   value = module.jenkins-worker.hostname
 }
+
+########################
+#    SECURITY GROUP    #
+########################
+resource "aws_security_group" "jenkins-server" {
+  vpc_id      = aws_vpc.vpc.id
+  name        = "${var.vpcname}_jenkins-server"
+  description = "${var.vpcname} jenkins server"
+
+  ingress {
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = var.fw_app_cidr_ipv4
+    ipv6_cidr_blocks = var.fw_app_cidr_ipv6
+  }
+
+  ingress {
+    from_port        = 50000
+    to_port          = 50000
+    protocol         = "udp"
+    cidr_blocks      = var.fw_app_cidr_ipv4
+    ipv6_cidr_blocks = var.fw_app_cidr_ipv6
+  }
+
+  tags = {
+    Name        = var.vpcname
+    environment = var.environment
+    deployment  = var.deployment
+    OWNER       = var.OWNER
+    ROLE        = var.ROLE
+    AlwaysOn    = var.AlwaysOn
+  }
+}
+
+resource "aws_network_interface_sg_attachment" "jenkins-server_sg_attachment" {
+  security_group_id    = aws_security_group.jenkins-server.id
+  network_interface_id = module.jenkins-server.primary_network_interface_id
+}
