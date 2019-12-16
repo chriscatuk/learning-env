@@ -1,0 +1,15 @@
+# Backend for your Terraform State
+# use: terraform workspace new <workspace_name>
+# More info: https://www.terraform.io/docs/backends/types/s3.html
+#
+# This file must be renamed backend.safe.tf (all *.safe.tf are ignored in .gitignore)
+
+terraform {
+  backend "s3" {
+    bucket               = "mybucket"
+    workspace_key_prefix = "terraform-workspaces"
+    key                  = "terraform-state"
+    region               = "eu-west-2"
+    role_arn             = "arn:aws:iam::xxxxxxxxxxxxx:role/rolename"
+  }
+}

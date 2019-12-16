@@ -1,0 +1,58 @@
+module "jenkins-client" {
+  source = "./modules/gp-instance"
+
+  project_name      = var.vpcname
+  subnet_id         = aws_subnet.a.id
+  sg_id             = aws_security_group.sg_client.id
+  region            = var.region
+  hostname          = "jenkinsclient-gonzalvezc.aws.gonzalvez.net"
+  route53_zoneID    = var.route53_zoneID
+  dnsupdate_rolearn = var.dnsupdate_rolearn
+  dnsupdate_region  = var.dnsupdate_region
+  instance_type     = "t3.micro"
+  template_path     = "${path.module}/templates/jenkins-client-user_data.tpl"
+  template_vars = {
+    hostname        = "jenkinslient-gonzalvezc.aws.gonzalvez.net"
+    keypubic        = var.keypublic
+    username        = var.username
+    master_hostname = var.hostname
+  }
+
+  ipv6     = var.ipv6
+  username = var.username
+
+  keyname   = "${var.keyname}_client"
+  keypublic = var.keypublic
+
+  tags = {
+    Name        = "${var.vpcname}-client"
+    environment = var.environment
+    deployment  = var.deployment
+    OWNER       = var.OWNER
+    ROLE        = var.ROLE
+    AlwaysOn    = var.AlwaysOn
+  }
+
+  fw_all_cidr_ipv4 = var.fw_all_cidr_ipv4
+  fw_all_cidr_ipv6 = var.fw_all_cidr_ipv6
+  fw_ssh_cidr_ipv4 = var.fw_ssh_cidr_ipv4
+  fw_ssh_cidr_ipv6 = var.fw_ssh_cidr_ipv6
+}
+
+output "Public-IPv4-Client" {
+  value = "${module.jenkins-client.public_ip} (${module.jenkins-server.id})"
+}
+
+output "Public-IPv6-Client" {
+  value = module.jenkins-client.ipv6_address
+}
+
+output "Instance-link-Client" {
+  value = module.jenkins-client.aws_console_link
+}
+
+output "Hostname-Client" {
+  #  sensitive = true
+  value = module.jenkins-client.hostname
+}
+
