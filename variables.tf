@@ -30,6 +30,11 @@ variable "jenkins" {
   default = false
 }
 
+# Will it deploy a VPN-Bastion server
+variable "vpn_bastion" {
+  type    = bool
+  default = true
+}
 
 #hostname will be setup in Linux and added to Route 53 DNS Names
 #Should be FQDN, ex: test.domain.com

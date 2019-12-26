@@ -1,6 +1,8 @@
 module "vpn-bastion" {
   source = "./modules/gp-instance"
 
+  enabled = var.vpn_bastion
+
   subnet_id         = aws_subnet.a.id
   sg_id             = aws_security_group.sg_bastion.id
   region            = var.region
@@ -49,13 +51,16 @@ resource "random_string" "PSK" {
 
 output "VPN-Credentials" {
   #  sensitive = true
-  value = "Server: ${module.vpn-bastion.hostname} - PSK: ${random_string.PSK.result} - User: vpnuser / ${random_string.password.result} \n Internal: ${module.vpn-bastion.internal_hostname}"
+  value = var.vpn_bastion ? "Server: ${module.vpn-bastion.hostname} - PSK: ${random_string.PSK.result} - User: vpnuser / ${random_string.password.result} \n Internal: ${module.vpn-bastion.internal_hostname}" : ""
 }
 
 ########################
 #    SECURITY GROUP    #
 ########################
 resource "aws_security_group" "vpn" {
+
+  count = var.vpn_bastion ? 1 : 0
+
   vpc_id      = aws_vpc.vpc.id
   name        = "${var.vpcname}_vpn"
   description = "${var.vpcname} vpn-bastion vpn access"
@@ -87,6 +92,7 @@ resource "aws_security_group" "vpn" {
 }
 
 resource "aws_network_interface_sg_attachment" "vpn_sg_attachment" {
-  security_group_id    = aws_security_group.vpn.id
+  count                = var.vpn_bastion ? 1 : 0
+  security_group_id    = aws_security_group.vpn[0].id
   network_interface_id = module.vpn-bastion.primary_network_interface_id
 }
