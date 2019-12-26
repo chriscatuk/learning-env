@@ -66,3 +66,8 @@ variable "dnsupdate_rolearn" {
 variable "dnsupdate_region" {
   type = string
 }
+
+variable "enabled" {
+  type    = bool
+  default = true
+}

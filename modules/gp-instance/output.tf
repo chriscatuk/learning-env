@@ -1,32 +1,28 @@
 output "private_ip" {
-  value = aws_instance.instance.private_ip
+  value = var.enabled ? aws_instance.instance[0].private_ip : ""
 }
 
 output "public_ip" {
-  value = aws_eip.ip.public_ip
+  value = var.enabled ? aws_eip.ip[0].public_ip : ""
 }
 
 output "id" {
-  value = aws_instance.instance.id
+  value = var.enabled ? aws_instance.instance[0].id : ""
 }
 
 output "ipv6_address" {
-  value = aws_instance.instance.ipv6_addresses
-}
-
-output "aws_console_link" {
-  value = "https://${var.region}.console.aws.amazon.com/ec2/v2/home?region=${var.region}#Instances:instanceId=${aws_instance.instance.id};sort=desc:instanceId"
+  value = var.enabled ? aws_instance.instance[0].ipv6_addresses : [""]
 }
 
 output "hostname" {
-  value = var.hostname
+  value = var.enabled ? var.hostname : ""
 }
 
 output "internal_hostname" {
-  value = "internal-${var.hostname}"
+  value = var.enabled ? "internal-${var.hostname}" : ""
 }
 
 
 output "primary_network_interface_id" {
-  value = aws_instance.instance.primary_network_interface_id
+  value = var.enabled ? aws_instance.instance[0].primary_network_interface_id : ""
 }

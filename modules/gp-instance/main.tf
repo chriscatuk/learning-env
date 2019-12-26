@@ -1,4 +1,5 @@
 resource "aws_instance" "instance" {
+  count         = var.enabled ? 1 : 0
   ami           = data.aws_ami.ami_amzn2.id
   instance_type = var.instance_type
   # # Removed. It was limited to RSA Keys.
@@ -45,7 +46,8 @@ data "aws_ami" "ami_amzn2" {
 #      ELASTIC IP      #
 ########################
 resource "aws_eip" "ip" {
-  instance = aws_instance.instance.id
+  count    = var.enabled ? 1 : 0
+  instance = aws_instance.instance[0].id
   tags     = var.tags
 }
 
@@ -77,29 +79,32 @@ provider "aws" {
 }
 
 resource "aws_route53_record" "servername_ipv4" {
+  count    = var.enabled ? 1 : 0
   provider = aws.dnsupdate
   zone_id  = var.route53_zoneID
   name     = "${var.hostname}."
   type     = "A"
   ttl      = "300"
-  records  = [aws_eip.ip.public_ip]
+  records  = [aws_eip.ip[0].public_ip]
 }
 
 resource "aws_route53_record" "servername_ipv4_internal" {
+  count    = var.enabled ? 1 : 0
   provider = aws.dnsupdate
   zone_id  = var.route53_zoneID
   name     = "internal-${var.hostname}."
   type     = "A"
   ttl      = "300"
-  records  = [aws_instance.instance.private_ip]
+  records  = [aws_instance.instance[0].private_ip]
 }
 
 resource "aws_route53_record" "servername_ipv6" {
+  count    = var.enabled ? 1 : 0
   provider = aws.dnsupdate
   zone_id  = var.route53_zoneID
   name     = "${var.hostname}."
   type     = "AAAA"
   ttl      = "300"
-  records  = aws_instance.instance.ipv6_addresses
+  records  = aws_instance.instance[0].ipv6_addresses
 }
 

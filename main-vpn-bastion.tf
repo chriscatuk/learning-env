@@ -57,7 +57,7 @@ output "VPN-Credentials" {
 ########################
 resource "aws_security_group" "vpn" {
   vpc_id      = aws_vpc.vpc.id
-  name        = "${var.vpcname}_vpn-bastion"
+  name        = "${var.vpcname}_vpn"
   description = "${var.vpcname} vpn-bastion vpn access"
 
   ingress {
@@ -77,7 +77,7 @@ resource "aws_security_group" "vpn" {
   }
 
   tags = {
-    Name        = var.vpcname
+    Name        = "${var.vpcname}_vpn"
     environment = var.environment
     deployment  = var.deployment
     OWNER       = var.OWNER

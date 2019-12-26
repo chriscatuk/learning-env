@@ -18,6 +18,19 @@ variable "cidr" {
   default = "172.30.200.0/22"
 }
 
+# Will it deploy a puppet server
+variable "puppet" {
+  type    = bool
+  default = false
+}
+
+# Will it deploy a Jenkins server
+variable "jenkins" {
+  type    = bool
+  default = false
+}
+
+
 #hostname will be setup in Linux and added to Route 53 DNS Names
 #Should be FQDN, ex: test.domain.com
 variable "suffix_hostname" {

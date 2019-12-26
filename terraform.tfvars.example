@@ -6,42 +6,47 @@
 
 #All resources will have this Name tag (VPC, SG, IGW, Subnets...)
 vpcname = "training"
-region = "eu-west-2"
+region  = "eu-west-2"
 
 #Subnet of the VPC (will be divided in 3 Availability Zones)
 cidr = "172.30.200.0/22"
 
+# Will it deploy a puppet server
+puppet = true
+# Will it deploy a Jenkins server
+jenkins = true
+
 #This hostname will be setup in Linux and added to Route 53 DNS Names
 #Should be FQDN, ex: jenkins-test.domain.com
 suffix_hostname = "training.mydomain.com"
-route53_zoneID = "XXXXXXXXXX"
-instance_type = "t3.micro"
-template_path = "templates/vpn-server-user_data.tpl"
+route53_zoneID  = "XXXXXXXXXX"
+instance_type   = "t3.micro"
+template_path   = "templates/vpn-server-user_data.tpl"
 
 # Enable IPv6 support, in Dual Stack mode
 ipv6 = true
 
 # Tags added to all ressources in AWS
-deployment = "terraform"
+deployment  = "terraform"
 environment = "test"
-OWNER = "username"
-ROLE = "Training"
-AlwaysOn = "OFF" #Possible values are ON/OFF.
+OWNER       = "username"
+ROLE        = "Training"
+AlwaysOn    = "OFF" #Possible values are ON/OFF.
 
 # User with SSH and Sudo access.
 username = "username"
 
 # keypublic line will be added to ~/.ssh/authorized_keys
-keypublic = "ssh-rsa AAAAB3d....ddd email@domain.com" 
+keypublic = "ssh-rsa AAAAB3d....ddd email@domain.com"
 
 # CIDR allowed for the VPN traffic
 fw_vpn_cidr_ipv4 = ["0.0.0.0/0"]
 fw_vpn_cidr_ipv6 = ["::/0"]
 
 # CIDR allowed for the App traffic
-fw_app_cidr_ipv4 = [ "10.0.0.0/8" ]
-fw_app_cidr_ipv6 = [ "fd00::/8" ]
+fw_app_cidr_ipv4 = ["10.0.0.0/8"]
+fw_app_cidr_ipv6 = ["fd00::/8"]
 
 # CIDR allowed for SSH to Bastion
-fw_ssh_cidr_ipv4 = [ "8.8.4.4/32", "8.8.8.8/32" ]
-fw_ssh_cidr_ipv6 = [ "2001:db8::/32" ]
+fw_ssh_cidr_ipv4 = ["8.8.4.4/32", "8.8.8.8/32"]
+fw_ssh_cidr_ipv6 = ["2001:db8::/32"]
