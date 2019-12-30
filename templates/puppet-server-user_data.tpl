@@ -53,6 +53,7 @@ runcmd:
  - echo "***** DOCKER SETUP ******"
  - echo "DNS_ALT_NAMES=${hostname} docker-compose up -d"
  - DNS_ALT_NAMES=${hostname} docker-compose up -d
+ - echo "et Voila"
 # Ansible
 # - amazon-linux-extras install ansible2 -y
 # Terraform
