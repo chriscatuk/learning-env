@@ -4,7 +4,7 @@ module "vpn-bastion" {
   enabled = var.vpn_bastion
 
   subnet_id         = aws_subnet.a.id
-  sg_id             = aws_security_group.sg_bastion.id
+  sg_ids            = [aws_security_group.sg_bastion.id, aws_security_group.vpn.id]
   region            = var.region
   hostname          = "training-bastion-${var.suffix_hostname}"
   route53_zoneID    = var.route53_zoneID
@@ -59,8 +59,6 @@ output "VPN-Credentials" {
 ########################
 resource "aws_security_group" "vpn" {
 
-  count = var.vpn_bastion ? 1 : 0
-
   vpc_id      = aws_vpc.vpc.id
   name        = "${var.vpcname}_vpn"
   description = "${var.vpcname} vpn-bastion vpn access"
@@ -89,10 +87,4 @@ resource "aws_security_group" "vpn" {
     ROLE        = var.ROLE
     AlwaysOn    = var.AlwaysOn
   }
-}
-
-resource "aws_network_interface_sg_attachment" "vpn_sg_attachment" {
-  count                = var.vpn_bastion ? 1 : 0
-  security_group_id    = aws_security_group.vpn[0].id
-  network_interface_id = module.vpn-bastion.primary_network_interface_id
 }

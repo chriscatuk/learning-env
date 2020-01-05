@@ -8,7 +8,7 @@ resource "aws_instance" "instance" {
   subnet_id                   = var.subnet_id
   associate_public_ip_address = true
   ipv6_address_count          = var.ipv6 != "" ? 1 : 0
-  vpc_security_group_ids      = [var.sg_id]
+  vpc_security_group_ids      = var.sg_ids
   tags                        = var.tags
   lifecycle {
     create_before_destroy = true

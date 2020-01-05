@@ -9,8 +9,8 @@ variable "subnet_id" {
   type = string
 }
 
-variable "sg_id" {
-  type = string
+variable "sg_ids" {
+  type = list
 }
 
 #This hostname will be setup in Linux and added to Route 53 DNS Names

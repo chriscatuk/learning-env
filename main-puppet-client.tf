@@ -4,7 +4,7 @@ module "puppet-client" {
   enabled = var.puppet
 
   subnet_id         = aws_subnet.a.id
-  sg_id             = aws_default_security_group.sg.id
+  sg_ids            = [aws_default_security_group.sg.id, aws_security_group.puppet-client.id]
   region            = var.region
   hostname          = "puppet-client-${var.suffix_hostname}"
   route53_zoneID    = var.route53_zoneID
@@ -46,8 +46,6 @@ output "Puppet_Client_Hostname" {
 ########################
 resource "aws_security_group" "puppet-client" {
 
-  count = var.puppet ? 1 : 0
-
   vpc_id      = aws_vpc.vpc.id
   name        = "${var.vpcname}_puppet-client"
   description = "${var.vpcname} puppet client"
@@ -56,7 +54,7 @@ resource "aws_security_group" "puppet-client" {
     from_port       = 8140
     to_port         = 8140
     protocol        = "tcp"
-    security_groups = [aws_security_group.puppet-server[0].id]
+    security_groups = [aws_security_group.puppet-server.id]
   }
 
   tags = {
@@ -67,12 +65,4 @@ resource "aws_security_group" "puppet-client" {
     ROLE        = var.ROLE
     AlwaysOn    = var.AlwaysOn
   }
-}
-
-resource "aws_network_interface_sg_attachment" "puppet-client_sg_attachment" {
-
-  count = var.puppet ? 1 : 0
-
-  security_group_id    = aws_security_group.puppet-client[0].id
-  network_interface_id = module.puppet-client.primary_network_interface_id
 }

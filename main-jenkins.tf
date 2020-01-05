@@ -4,7 +4,7 @@ module "jenkins-server" {
   enabled = var.jenkins
 
   subnet_id         = aws_subnet.a.id
-  sg_id             = aws_default_security_group.sg.id
+  sg_ids            = [aws_default_security_group.sg.id, aws_security_group.jenkins-server.id]
   region            = var.region
   hostname          = "jenkins-server-${var.suffix_hostname}"
   route53_zoneID    = var.route53_zoneID
@@ -46,7 +46,7 @@ module "jenkins-worker" {
   enabled = var.jenkins
 
   subnet_id         = aws_subnet.a.id
-  sg_id             = aws_default_security_group.sg.id
+  sg_ids            = [aws_default_security_group.sg.id]
   region            = var.region
   hostname          = "jenkins-worker-${var.suffix_hostname}"
   route53_zoneID    = var.route53_zoneID
@@ -87,8 +87,6 @@ output "Jenkins_Worker_Hostname" {
 ########################
 resource "aws_security_group" "jenkins-server" {
 
-  count = var.jenkins ? 1 : 0
-
   vpc_id      = aws_vpc.vpc.id
   name        = "${var.vpcname}_jenkins-server"
   description = "${var.vpcname} jenkins server"
@@ -117,12 +115,4 @@ resource "aws_security_group" "jenkins-server" {
     ROLE        = var.ROLE
     AlwaysOn    = var.AlwaysOn
   }
-}
-
-resource "aws_network_interface_sg_attachment" "jenkins-server_sg_attachment" {
-
-  count = var.jenkins ? 1 : 0
-
-  security_group_id    = aws_security_group.jenkins-server[0].id
-  network_interface_id = module.jenkins-server.primary_network_interface_id
 }
