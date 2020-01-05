@@ -150,12 +150,6 @@ resource "aws_route_table_association" "route_sb_b" {
 ###################################
 resource "aws_default_security_group" "sg" {
   vpc_id = aws_vpc.vpc.id
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.sg_bastion.id]
-  }
 
   egress {
     from_port        = 0
@@ -174,6 +168,16 @@ resource "aws_default_security_group" "sg" {
     ROLE        = var.ROLE
     AlwaysOn    = var.AlwaysOn
   }
+}
+
+# Handle dependancies on destroy
+resource "aws_security_group_rule" "ssh_jump" {
+  type                     = "ingress"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.sg_bastion.id
+  security_group_id        = aws_default_security_group.sg.id
 }
 
 ###############################################
