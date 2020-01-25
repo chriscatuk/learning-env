@@ -3,7 +3,7 @@ output "private_ip" {
 }
 
 output "public_ip" {
-  value = var.enabled ? aws_eip.ip[0].public_ip : ""
+  value = var.enabled && var.public_ip ? aws_eip.ip[0].public_ip : ""
 }
 
 output "id" {
@@ -15,7 +15,7 @@ output "ipv6_address" {
 }
 
 output "hostname" {
-  value = var.enabled ? var.hostname : ""
+  value = var.enabled && var.public_ip ? var.hostname : ""
 }
 
 output "internal_hostname" {

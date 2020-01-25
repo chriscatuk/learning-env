@@ -71,3 +71,8 @@ variable "enabled" {
   type    = bool
   default = true
 }
+
+variable "public_ip" {
+  type    = bool
+  default = true
+}

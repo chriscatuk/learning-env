@@ -10,6 +10,7 @@ module "jenkins-server" {
   route53_zoneID    = var.route53_zoneID
   dnsupdate_rolearn = var.dnsupdate_rolearn
   dnsupdate_region  = var.dnsupdate_region
+  public_ip         = true
   instance_type     = "t3.small"
   template_path     = "${path.module}/templates/jenkins-server-user_data.tpl"
   template_vars = {
@@ -37,7 +38,7 @@ module "jenkins-server" {
 
 output "Jenkins_Hostname" {
   #  sensitive = true
-  value = var.jenkins ? module.jenkins-server.hostname : ""
+  value = var.jenkins ? module.jenkins-server.internal_hostname : ""
 }
 
 module "jenkins-worker" {
@@ -52,6 +53,7 @@ module "jenkins-worker" {
   route53_zoneID    = var.route53_zoneID
   dnsupdate_rolearn = var.dnsupdate_rolearn
   dnsupdate_region  = var.dnsupdate_region
+  public_ip         = false
   instance_type     = "t3.micro"
   template_path     = "${path.module}/templates/jenkins-client-user_data.tpl"
   template_vars = {
@@ -79,8 +81,9 @@ module "jenkins-worker" {
 
 output "Jenkins_Worker_Hostname" {
   #  sensitive = true
-  value = var.jenkins ? module.jenkins-worker.hostname : ""
+  value = var.jenkins ? module.jenkins-worker.internal_hostname : ""
 }
+
 
 ########################
 #    SECURITY GROUP    #

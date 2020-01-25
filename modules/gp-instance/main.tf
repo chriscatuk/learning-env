@@ -6,7 +6,7 @@ resource "aws_instance" "instance" {
   # # Replaced by Key directly in user_data
   # key_name                    = aws_key_pair.key.key_name
   subnet_id                   = var.subnet_id
-  associate_public_ip_address = true
+  associate_public_ip_address = var.public_ip
   ipv6_address_count          = var.ipv6 != "" ? 1 : 0
   vpc_security_group_ids      = var.sg_ids
   tags                        = var.tags
@@ -46,7 +46,7 @@ data "aws_ami" "ami_amzn2" {
 #      ELASTIC IP      #
 ########################
 resource "aws_eip" "ip" {
-  count    = var.enabled ? 1 : 0
+  count    = var.enabled && var.public_ip ? 1 : 0
   instance = aws_instance.instance[0].id
   tags     = var.tags
 }
@@ -79,12 +79,12 @@ provider "aws" {
 }
 
 resource "aws_route53_record" "servername_ipv4" {
-  count    = var.enabled ? 1 : 0
+  count    = var.enabled && var.public_ip ? 1 : 0
   provider = aws.dnsupdate
   zone_id  = var.route53_zoneID
   name     = "${var.hostname}."
   type     = "A"
-  ttl      = "300"
+  ttl      = "60"
   records  = [aws_eip.ip[0].public_ip]
 }
 
@@ -94,7 +94,7 @@ resource "aws_route53_record" "servername_ipv4_internal" {
   zone_id  = var.route53_zoneID
   name     = "internal-${var.hostname}."
   type     = "A"
-  ttl      = "300"
+  ttl      = "60"
   records  = [aws_instance.instance[0].private_ip]
 }
 
@@ -104,7 +104,7 @@ resource "aws_route53_record" "servername_ipv6" {
   zone_id  = var.route53_zoneID
   name     = "${var.hostname}."
   type     = "AAAA"
-  ttl      = "300"
+  ttl      = "60"
   records  = aws_instance.instance[0].ipv6_addresses
 }
 

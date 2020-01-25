@@ -10,6 +10,7 @@ module "puppet-client" {
   route53_zoneID    = var.route53_zoneID
   dnsupdate_rolearn = var.dnsupdate_rolearn
   dnsupdate_region  = var.dnsupdate_region
+  public_ip         = true
   instance_type     = "t3.small"
   template_path     = "${path.module}/templates/puppet-client-user_data.tpl"
   template_vars = {
@@ -38,7 +39,7 @@ module "puppet-client" {
 
 output "Puppet_Client_Hostname" {
   #  sensitive = true
-  value = var.puppet ? module.puppet-client.hostname : ""
+  value = var.puppet ? module.puppet-client.internal_hostname : ""
 }
 
 ########################
