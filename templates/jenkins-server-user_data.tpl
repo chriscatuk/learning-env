@@ -44,29 +44,21 @@ runcmd:
  - systemctl start yum-cron
 # Docker
  - amazon-linux-extras install docker -y
- - sudo curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
- - sudo chmod +x /usr/bin/docker-compose
+ - curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
+ - chmod +x /usr/bin/docker-compose
  - systemctl enable docker
  - systemctl start docker
 # Jenkins
 #  - yum -y install java-openjdk
-# With Docker Volume
-- docker run --restart unless-stopped  -u root -d   -p 8080:8080   -p 50000:50000   -v jenkins-data:/var/jenkins_home   -v /var/run/docker.sock:/var/run/docker.sock   jenkinsci/blueocean
-# With Bind Volume
 - mkdir /home/jenkins_home
 - chmod -R o-rwx /home/jenkins_home
-- docker run --restart unless-stopped  -u root -d   -p 8080:8080   -p 50000:50000   -v /home/jenkins_home:/var/jenkins_home   -v /var/run/docker.sock:/var/run/docker.sock   jenkinsci/blueocean
+- docker run --restart unless-stopped  -u root -d   -p 8080:8080   -p 50000:50000   --mount type=bind,source=/home/jenkins_home,target=/var/jenkins_home   -v /var/run/docker.sock:/var/run/docker.sock   jenkinsci/blueocean
 # Clone repo 2/2: Clone & Install
 #  - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
 #  - cd $${docker_dir}
 #  - echo "***** DOCKER SETUP ******"
 #  - echo "DNS_ALT_NAMES=${hostname} docker-compose up -d"
 #  - DNS_ALT_NAMES=${hostname} docker-compose up -d
-# Ansible
-# - amazon-linux-extras install ansible2 -y
-# Terraform
-# - wget https://releases.hashicorp.com/terraform/0.12.5/terraform_0.12.5_linux_amd64.zip -qP ~/
-# - unzip ~/terraform_0.12.5_linux_amd64.zip -d /usr/local/bin/
 
 power_state:
    delay: "now"
