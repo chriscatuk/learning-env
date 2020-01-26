@@ -50,7 +50,12 @@ runcmd:
  - systemctl start docker
 # Jenkins
 #  - yum -y install java-openjdk
- - docker run --restart unless-stopped  -u root -d   -p 8080:8080   -p 50000:50000   -v jenkins-data:/var/jenkins_home   -v /var/run/docker.sock:/var/run/docker.sock   jenkinsci/blueocean
+# With Docker Volume
+- docker run --restart unless-stopped  -u root -d   -p 8080:8080   -p 50000:50000   -v jenkins-data:/var/jenkins_home   -v /var/run/docker.sock:/var/run/docker.sock   jenkinsci/blueocean
+# With Bind Volume
+- mkdir /home/jenkins_home
+- chmod -R o-rwx /home/jenkins_home
+- docker run --restart unless-stopped  -u root -d   -p 8080:8080   -p 50000:50000   -v /home/jenkins_home:/var/jenkins_home   -v /var/run/docker.sock:/var/run/docker.sock   jenkinsci/blueocean
 # Clone repo 2/2: Clone & Install
 #  - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
 #  - cd $${docker_dir}
