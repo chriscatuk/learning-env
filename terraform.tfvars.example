@@ -12,7 +12,9 @@ region  = "eu-west-2"
 cidr = "172.30.200.0/22"
 
 # Will it deploy a puppet server
-puppet = true
+puppet           = true
+puppet_version   = "latest"
+puppetdb_version = "latest"
 # Will it deploy a Jenkins server
 jenkins = true
 # Will it deploy a VPN-Bastion server
@@ -21,6 +23,7 @@ vpn_bastion = true
 #This hostname will be setup in Linux and added to Route 53 DNS Names
 #Should be FQDN, ex: jenkins-test.domain.com
 suffix_hostname = "training.mydomain.com"
+route53_domain  = "mydomain.com"
 route53_zoneID  = "XXXXXXXXXX"
 instance_type   = "t3.micro"
 template_path   = "templates/vpn-server-user_data.tpl"

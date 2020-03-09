@@ -51,8 +51,8 @@ runcmd:
  - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
  - cd $${docker_dir}
  - echo "***** DOCKER SETUP ******"
- - echo "DNS_ALT_NAMES=${hostname} docker-compose up -d"
- - DNS_ALT_NAMES=${hostname} docker-compose up -d
+ - echo "DNS_ALT_NAMES=${hostname} PUPPETSERVER_VERSION=${puppet_version} DOMAIN=${puppet_domain} PUPPETDB_VERSION=${puppetdb_version} docker-compose up -d"
+ - DNS_ALT_NAMES=${hostname} PUPPETSERVER_VERSION=${puppet_version} DOMAIN=${puppet_domain} PUPPETDB_VERSION=${puppetdb_version} docker-compose up -d
 
 # Ansible
 # - amazon-linux-extras install ansible2 -y

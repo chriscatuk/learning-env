@@ -43,12 +43,22 @@ runcmd:
  - sed -i -e 's/apply_updates = no/apply_updates = yes/g' /etc/yum/yum-cron-hourly.conf
  - systemctl start yum-cron
 # Puppet Client
- - rpm -ivh http://yum.puppetlabs.com/puppet6-release-el-7.noarch.rpm
- - yum -y install puppet-agent
- - echo "Setting up puppet master ${master_hostname} by typing:"
- - echo "/opt/puppetlabs/bin/puppet config set server ${master_hostname} --section main"
- - echo "Start puppet client by typing:"
- - echo "/opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true"
+ - echo "**************************"
+ - echo "*     Puppet Install     *"
+ - echo "**************************"
+# - yum -y install puppet-agent # would install the latest (v6)
+ - mkdir -p /opt/puppet5_install
+# - wget -P /opt/puppet5_install https://yum.puppet.com/puppet5/puppet5-release-el-8.noarch.rpm
+# - yum install /opt/puppet5_install/puppet5-release-el-8.noarch.rpm -y
+ - wget -P /opt/puppet5_install https://yum.puppet.com/puppet5/el/5/x86_64/puppet-agent-5.5.8-1.el5.x86_64.rpm
+ - yum install /opt/puppet5_install/puppet-agent-5.5.8-1.el5.x86_64.rpm -y
+ - echo "*    Setting up puppet master ${master_hostname}"
+ - /opt/puppetlabs/bin/puppet config set server ${master_hostname} --section main
+ - echo "*    Start puppet client"
+ - /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
+ - echo "**************************"
+ - echo "*    Puppet Installed    *"
+ - echo "**************************"
 
 # Docker
 #  - amazon-linux-extras install docker -y

@@ -24,6 +24,16 @@ variable "puppet" {
   default = false
 }
 
+variable "puppet_version" { # tag in Docker Hub repo puppet/puppetserver
+  type    = string
+  default = "latest"
+}
+
+variable "puppetdb_version" { # tag in Docker Hub repo puppet/puppetdb
+  type    = string
+  default = "latest"
+}
+
 # Will it deploy a Jenkins server
 variable "jenkins" {
   type    = bool
@@ -39,6 +49,10 @@ variable "vpn_bastion" {
 #hostname will be setup in Linux and added to Route 53 DNS Names
 #Should be FQDN, ex: test.domain.com
 variable "suffix_hostname" {
+  type = string
+}
+
+variable "route53_domain" {
   type = string
 }
 

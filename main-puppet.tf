@@ -6,7 +6,7 @@ module "puppet-server" {
   subnet_id         = aws_subnet.a.id
   sg_ids            = [aws_default_security_group.sg.id, aws_security_group.puppet-server.id]
   region            = var.region
-  hostname          = "puppet-server-${var.suffix_hostname}"
+  hostname          = "puppet.${var.route53_domain}"
   route53_zoneID    = var.route53_zoneID
   dnsupdate_rolearn = var.dnsupdate_rolearn
   dnsupdate_region  = var.dnsupdate_region
@@ -14,9 +14,12 @@ module "puppet-server" {
   instance_type     = "t3.small"
   template_path     = "${path.module}/templates/puppet-server-user_data.tpl"
   template_vars = {
-    hostname = module.puppet-server.hostname
-    keypubic = var.keypublic
-    username = var.username
+    hostname         = module.puppet-server.hostname
+    keypubic         = var.keypublic
+    username         = var.username
+    puppet_domain    = var.route53_domain
+    puppet_version   = var.puppet_version
+    puppetdb_version = var.puppetdb_version
   }
 
   ipv6     = var.ipv6
@@ -25,12 +28,13 @@ module "puppet-server" {
   keypublic = var.keypublic
 
   tags = {
-    Name        = "${var.vpcname}-puppet-server"
-    environment = var.environment
-    deployment  = var.deployment
-    OWNER       = var.OWNER
-    ROLE        = var.ROLE
-    AlwaysOn    = var.AlwaysOn
+    Name           = "${var.vpcname}-puppet-server"
+    environment    = var.environment
+    deployment     = var.deployment
+    OWNER          = var.OWNER
+    ROLE           = var.ROLE
+    AlwaysOn       = var.AlwaysOn
+    puppet_version = var.puppet_version
   }
 }
 
