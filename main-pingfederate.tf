@@ -1,7 +1,7 @@
 module "pingfederate" {
   source = "./modules/gp-instance"
 
-  enabled = var.vpn_bastion
+  enabled = var.pingfederate
 
   subnet_id         = aws_subnet.a.id
   sg_ids            = [aws_security_group.sg_bastion.id, aws_security_group.pingfederate.id]

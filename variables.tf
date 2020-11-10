@@ -40,6 +40,12 @@ variable "jenkins" {
   default = false
 }
 
+# Will it deploy a Ping Federate cluster
+variable "pingfederate" {
+  type    = bool
+  default = false
+}
+
 # Will it deploy a VPN-Bastion server
 variable "vpn_bastion" {
   type    = bool
