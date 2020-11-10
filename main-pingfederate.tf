@@ -4,7 +4,7 @@ module "pingfederate" {
   enabled = var.pingfederate
 
   subnet_id         = aws_subnet.a.id
-  sg_ids            = [aws_security_group.sg_bastion.id, aws_security_group.pingfederate.id]
+  sg_ids            = [aws_default_security_group.sg.id, aws_security_group.pingfederate.id]
   region            = var.region
   hostname          = "pingfederate-${var.suffix_hostname}"
   route53_zoneID    = var.route53_zoneID
@@ -68,4 +68,9 @@ resource "aws_security_group" "pingfederate" {
     ROLE        = var.ROLE
     AlwaysOn    = var.AlwaysOn
   }
+}
+
+output "pingfederate_Hostname" {
+  #  sensitive = true
+  value = var.pingfederate ? module.pingfederate.internal_hostname : ""
 }
