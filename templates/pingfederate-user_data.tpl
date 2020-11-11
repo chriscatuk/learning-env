@@ -57,14 +57,14 @@ runcmd:
   - systemctl enable docker
   - systemctl start docker
   # App
-  - sudo curl -sL https://bit.ly/ping-devops-install | bash
-  - sudo mv ~/ping-devops /usr/local/bin/.
-  - sudo mv ~/bash_profile.ping-devops /usr/local/etc/.
+  - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
+  - cd $${git_dir}
+  - "sudo curl -sL https://bit.ly/ping-devops-install | bash"
+  - sudo mv $${git_dir}/ping-devops /usr/local/bin/.
+  - sudo mv $${git_dir}/bash_profile.ping-devops /usr/local/etc/.
   - echo 'source /usr/local/etc/bash_profile.ping-devops' >> ~/.bash_profile
   - . ~/.bash_profile
   - echo "you can use /usr/local/bin/ping-devops"
-  # App container
-  - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
   - cd $${docker_dir}
   - echo "***** DOCKER SETUP ******"
   - echo docker-compose up -d
