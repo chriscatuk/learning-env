@@ -25,7 +25,7 @@ packages:
 
 runcmd:
   # First line with -e to stop Packer on any error in the script below"
-  -  #!/bin/bash -e
+  - "#!/bin/bash -e"
   - echo ' '
   - echo '###########################'
   - echo '#  App Provisioner Begins '

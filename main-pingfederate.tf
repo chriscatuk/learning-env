@@ -10,7 +10,7 @@ module "pingfederate" {
   route53_zoneID    = var.route53_zoneID
   dnsupdate_rolearn = var.dnsupdate_rolearn
   dnsupdate_region  = var.dnsupdate_region
-  instance_type     = var.instance_type
+  instance_type     = "t3.large"
   template_path     = "${path.module}/templates/pingfederate-user_data.tpl"
   template_vars = {
     hostname = module.pingfederate.hostname
