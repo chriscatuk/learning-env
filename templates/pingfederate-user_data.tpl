@@ -58,11 +58,11 @@ runcmd:
   - systemctl start docker
   # App
   - sudo curl -sL https://bit.ly/ping-devops-install | bash
-  - sudo mv /root/ping-devops /usr/local/bin/.
-  - sudo mv /root/bash_profile.ping-devops /usr/local/etc/.
+  - sudo mv ~/ping-devops /usr/local/bin/.
+  - sudo mv ~/bash_profile.ping-devops /usr/local/etc/.
   - echo 'source /usr/local/etc/bash_profile.ping-devops' >> ~/.bash_profile
   - . ~/.bash_profile
-  - /usr/local/bin/ping-devops
+  - echo "you can use /usr/local/bin/ping-devops"
   # App container
   - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
   - cd $${docker_dir}
