@@ -45,8 +45,8 @@ resource "aws_security_group" "pingfederate" {
   description = "${var.vpcname} pingfederate"
 
   ingress {
-    from_port        = 9031
-    to_port          = 9031
+    from_port        = 443
+    to_port          = 443
     protocol         = "tcp"
     cidr_blocks      = var.fw_app_cidr_ipv4
     ipv6_cidr_blocks = var.fw_app_cidr_ipv6
