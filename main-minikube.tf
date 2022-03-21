@@ -10,7 +10,7 @@ module "minikube" {
   route53_zoneID    = var.route53_zoneID
   dnsupdate_rolearn = var.dnsupdate_rolearn
   dnsupdate_region  = var.dnsupdate_region
-  instance_type     = ""
+  instance_type     = "t3.micro"
   template_path     = "${path.module}/templates/minikube-user_data.tpl"
   template_vars = {
     hostname = module.minikube.hostname
