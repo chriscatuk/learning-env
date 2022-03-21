@@ -4,7 +4,7 @@ module "minikube" {
   enabled = var.minikube
 
   subnet_id         = aws_subnet.a.id
-  sg_ids            = [aws_security_group.minikube.id]
+  sg_ids            = [aws_default_security_group.sg.id, aws_security_group.minikube.id]
   region            = var.region
   hostname          = "training-minikube-${var.suffix_hostname}"
   route53_zoneID    = var.route53_zoneID

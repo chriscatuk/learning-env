@@ -50,6 +50,7 @@ runcmd:
   - sudo chmod +x /usr/bin/docker-compose
   - systemctl enable docker
   - systemctl start docker
+  - sudo usermod -aG docker ${username} && newgrp docker
   # Clone App repo 2/2: Clone & Install
   # - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
   # - cd $${git_dir}
@@ -63,7 +64,7 @@ runcmd:
   # KUBECTL & HELM
   - echo "====== Installing Kubectl and Helm ======"
   - mkdir /opt/kubectl
-  - curl --fail --silent --show-error -o /opt/kubectl/kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/darwin/amd64/kubectl
+  - curl --fail --silent --show-error -o /opt/kubectl/kubectl https://amazon-eks.s3.eu-west-1.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
   - cp /opt/kubectl/kubectl /usr/local/bin/
   - rm -rf /opt/kubectl
   - chmod a+x /usr/local/bin/kubectl
