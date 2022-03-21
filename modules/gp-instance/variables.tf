@@ -75,7 +75,7 @@ variable "enabled" {
 
 variable "public_ip" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "volume_size" {

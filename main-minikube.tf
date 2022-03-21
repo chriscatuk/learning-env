@@ -19,6 +19,7 @@ module "minikube" {
   }
 
   ipv6        = var.ipv6
+  public_ip   = false
   username    = var.username
   volume_size = 50
 
