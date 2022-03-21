@@ -17,6 +17,11 @@ resource "aws_instance" "instance" {
     cpu_credits = "standard"
   }
 
+  root_block_device {
+    volume_type = "gp3"
+    volume_size = var.volume_size
+  }
+
   user_data = data.template_file.user_data.rendered
 }
 
