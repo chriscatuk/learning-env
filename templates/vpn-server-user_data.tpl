@@ -58,11 +58,15 @@ runcmd:
   - docker-compose -f $${docker_dir}/docker-compose.yml up -d
   # Setup as SSH Jump Server
   - echo 'AcceptEnv AWS_*' >> /etc/ssh/sshd_config
-# Ansible
-# - amazon-linux-extras install ansible2 -y
-# Terraform
-# - wget https://releases.hashicorp.com/terraform/0.12.5/terraform_0.12.5_linux_amd64.zip -qP ~/
-# - unzip ~/terraform_0.12.5_linux_amd64.zip -d /usr/local/bin/
+  # Ansible
+  # - amazon-linux-extras install ansible2 -y
+  # Terraform
+  - echo "====== Installing Terraform ======"
+  - mkdir /opt/tfenv
+  - git clone --depth=1 https://github.com/tfutils/tfenv.git /opt/tfenv
+  - ln -s /opt/tfenv/bin/* /usr/local/bin
+  - tfenv install latest
+  - tfenv use latest
 
 power_state:
   delay: "now"
