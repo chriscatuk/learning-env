@@ -23,7 +23,9 @@ packages:
   - yum-cron
 
 runcmd:
-  # Clone VPN-Bastion repo 1/2: Settings
+  -  #!/bin/bash -xe
+  - set -xe
+  # Clone App repo 1/2: Settings
   - git_repo=https://github.com/chriscatuk/vpn-bastion.git
   - git_dir=/opt/github/vpn-bastion
   - git_branch=master
@@ -47,26 +49,33 @@ runcmd:
   - sudo chmod +x /usr/bin/docker-compose
   - systemctl enable docker
   - systemctl start docker
-  # Clone VPN-Bastion repo 2/2: Clone & Install
-  - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
-  - modprobe af_key
-  - cd $${git_dir}
-  # Uncomment to build locally instead of using Docker Hub latest version
-  # - docker build -t chriscat/ipsec-vpn-server $${docker_dir}
-  - echo "      - VPN_PASSWORD=${password}" >> $${docker_dir}/docker-compose.yml
-  - echo "      - VPN_IPSEC_PSK=${psk}" >> $${docker_dir}/docker-compose.yml
-  - docker-compose -f $${docker_dir}/docker-compose.yml up -d
-  # Setup as SSH Jump Server
-  - echo 'AcceptEnv AWS_*' >> /etc/ssh/sshd_config
-  # Ansible
-  # - amazon-linux-extras install ansible2 -y
+  - sudo usermod -aG docker ${username} && newgrp docker
+  # Clone App repo 2/2: Clone & Install
+  # - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
+  # - cd $${git_dir}
   # Terraform
-  - echo "====== Installing Terraform ======"
   - mkdir /opt/tfenv
   - git clone --depth=1 https://github.com/tfutils/tfenv.git /opt/tfenv
   - ln -s /opt/tfenv/bin/* /usr/local/bin
   - tfenv install latest
   - tfenv use latest
+  # KUBECTL & HELM
+  - mkdir /opt/kubectl
+  - curl --fail --silent --show-error -o /opt/kubectl/kubectl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  - cp /opt/kubectl/kubectl /usr/local/bin/
+  - rm -rf /opt/kubectl
+  - chmod a+x /usr/local/bin/kubectl
+  - export VERIFY_CHECKSUM=false && curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  # Minikube
+  - mkdir /opt/minikube
+  - curl --fail --silent --show-error -o /opt/minikube/minikube.rpm https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
+  - rpm -Uvh /opt/minikube/minikube.rpm
+  # Ansible
+  - python3 -m pip --no-cache-dir install ansible botocore boto3 openshift kubernetes
+  - mkdir /etc/ansible
+  - echo "[defaults]" ] > /etc/ansible/ansible.cfg
+  - echo "scp_if_ssh = True" ] >> /etc/ansible/ansible.cfg
+  - echo "interpreter_python=auto_silent" ] >> /etc/ansible/ansible.cfg
 
 power_state:
   delay: "now"

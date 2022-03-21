@@ -10,7 +10,8 @@ variable "subnet_id" {
 }
 
 variable "sg_ids" {
-  type = list
+  type    = list(any)
+  default = []
 }
 
 #This hostname will be setup in Linux and added to Route 53 DNS Names
@@ -73,6 +74,12 @@ variable "enabled" {
 }
 
 variable "public_ip" {
-  type    = bool
-  default = true
+  type        = bool
+  default     = true
+  description = "required because we don't use NAT in this VPC"
+}
+
+variable "volume_size" {
+  type    = string
+  default = 10
 }

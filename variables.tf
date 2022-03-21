@@ -24,6 +24,12 @@ variable "puppet" {
   default = false
 }
 
+# Will it deploy a minikube server
+variable "minikube" {
+  type    = bool
+  default = false
+}
+
 variable "puppet_version" { # tag in Docker Hub repo puppet/puppetserver
   type    = string
   default = "latest"
