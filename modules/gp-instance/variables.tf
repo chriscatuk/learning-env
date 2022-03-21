@@ -74,8 +74,9 @@ variable "enabled" {
 }
 
 variable "public_ip" {
-  type    = bool
-  default = false
+  type        = bool
+  default     = true
+  description = "required because we don't use NAT in this VPC"
 }
 
 variable "volume_size" {

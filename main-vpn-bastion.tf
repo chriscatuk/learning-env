@@ -21,7 +21,6 @@ module "vpn-bastion" {
   }
 
   ipv6      = var.ipv6
-  public_ip = true
   username  = var.username
 
   keypublic = var.keypublic
