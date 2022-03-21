@@ -5,3 +5,8 @@ output "Bastion_Hostname" {
   value = module.vpn-bastion.hostname
 }
 
+output "minikube_Hostname" {
+  #  sensitive = true
+  value = module.minikube.hostname
+}
+
