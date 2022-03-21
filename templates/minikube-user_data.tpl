@@ -61,7 +61,7 @@ runcmd:
   - tfenv use latest
   # KUBECTL & HELM
   - mkdir /opt/kubectl
-  - curl --fail --silent --show-error -o /opt/kubectl/kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
+  - curl --fail --silent --show-error -o /opt/kubectl/kubectl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
   - cp /opt/kubectl/kubectl /usr/local/bin/
   - rm -rf /opt/kubectl
   - chmod a+x /usr/local/bin/kubectl
