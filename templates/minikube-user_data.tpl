@@ -65,7 +65,7 @@ runcmd:
   # KUBECTL & HELM
   - export KUBECTL_SOURCE="https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl"
   - mkdir /opt/kubectl
-  - curl --fail --silent --show-error -o /opt/kubectl/kubectl ${KUBECTL_SOURCE}
+  - curl --fail --silent --show-error -o /opt/kubectl/kubectl \$KUBECTL_SOURCE
   - cp /opt/kubectl/kubectl /usr/local/bin/
   - rm -rf /opt/kubectl
   - chmod a+x /usr/local/bin/kubectl

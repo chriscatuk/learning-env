@@ -195,6 +195,14 @@ resource "aws_security_group" "sg_bastion" {
     ipv6_cidr_blocks = var.fw_ssh_cidr_ipv6
   }
 
+  ingress {
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = [aws_vpc.vpc.cidr_block]
+    ipv6_cidr_blocks = var.ipv6 ? [aws_vpc.vpc.ipv6_cidr_block] : []
+    description      = "same VPC"
+  }
   egress {
     from_port        = 0
     to_port          = 0
