@@ -75,8 +75,7 @@ resource "aws_eip" "ip" {
 
 # You can remove this file if you don't want to use DNS Names
 provider "aws" {
-  alias   = "dnsupdate"
-  version = "> 4.0"
+  alias = "dnsupdate"
   assume_role {
     role_arn = var.dnsupdate_rolearn
   }

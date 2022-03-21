@@ -4,13 +4,13 @@ module "minikube" {
   enabled = var.minikube
 
   subnet_id         = aws_subnet.a.id
-  sg_ids            = [aws_security_group.sg_bastion.id, aws_security_group.vpn.id]
+  sg_ids            = []
   region            = var.region
   hostname          = "training-minikube-${var.suffix_hostname}"
   route53_zoneID    = var.route53_zoneID
   dnsupdate_rolearn = var.dnsupdate_rolearn
   dnsupdate_region  = var.dnsupdate_region
-  instance_type     = var.instance_type
+  instance_type     = ""
   template_path     = "${path.module}/templates/minikube-user_data.tpl"
   template_vars = {
     hostname = module.minikube.hostname

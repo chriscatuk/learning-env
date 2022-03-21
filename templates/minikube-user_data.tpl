@@ -63,13 +63,11 @@ runcmd:
   - tfenv install latest
   - tfenv use latest
   # KUBECTL & HELM
-  - export KUBECTL_SOURCE="https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl"
   - mkdir /opt/kubectl
-  - curl --fail --silent --show-error -o /opt/kubectl/kubectl \$KUBECTL_SOURCE
+  - curl --fail --silent --show-error -o /opt/kubectl/kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/darwin/amd64/kubectl
   - cp /opt/kubectl/kubectl /usr/local/bin/
   - rm -rf /opt/kubectl
   - chmod a+x /usr/local/bin/kubectl
-  - mkdir -p /root/.kube
   - export VERIFY_CHECKSUM=false && curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
 power_state:

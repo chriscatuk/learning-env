@@ -10,7 +10,8 @@ variable "subnet_id" {
 }
 
 variable "sg_ids" {
-  type = list(any)
+  type    = list(any)
+  default = []
 }
 
 #This hostname will be setup in Linux and added to Route 53 DNS Names
