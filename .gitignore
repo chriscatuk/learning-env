@@ -9,6 +9,9 @@
 *.tfstate
 *.tfstate.backup
 
+# Lock
+.terraform.lock.hcl
+
 # Module directory
 .terraform/
 

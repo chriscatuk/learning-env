@@ -71,12 +71,24 @@ resource "aws_eip" "ip" {
 # You can remove this file if you don't want to use DNS Names
 provider "aws" {
   alias   = "dnsupdate"
-  version = "~> 2.15"
+  version = "> 4.0"
   assume_role {
     role_arn = var.dnsupdate_rolearn
   }
   region = var.dnsupdate_region
 }
+
+terraform {
+  required_version = ">=1.1"
+  required_providers {
+    aws = {
+      source                = "hashicorp/aws"
+      version               = ">= 4.0"
+      configuration_aliases = [aws.dnsupdate]
+    }
+  }
+}
+
 
 resource "aws_route53_record" "servername_ipv4" {
   count    = var.enabled && var.public_ip ? 1 : 0
