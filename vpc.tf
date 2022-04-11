@@ -53,8 +53,10 @@ resource "aws_subnet" "a" {
   # Bug Issue 688: https://github.com/terraform-providers/terraform-provider-aws/issues/688
   # Soon set even if no IPv6 for VPC
   # https://github.com/terraform-providers/terraform-provider-aws/pull/2103
-  ipv6_cidr_block                 = var.ipv6 ? cidrsubnet(aws_vpc.vpc.ipv6_cidr_block, 8, 10) : ""
-  assign_ipv6_address_on_creation = true
+  ipv6_cidr_block                                = var.ipv6 ? cidrsubnet(aws_vpc.vpc.ipv6_cidr_block, 8, 10) : ""
+  assign_ipv6_address_on_creation                = true
+  enable_resource_name_dns_aaaa_record_on_launch = var.ipv6
+  enable_resource_name_dns_a_record_on_launch    = true
 
   tags = {
     Name        = "${var.vpcname}-a"
@@ -72,8 +74,10 @@ resource "aws_subnet" "b" {
   cidr_block              = cidrsubnet(aws_vpc.vpc.cidr_block, 2, 1)
   map_public_ip_on_launch = true
 
-  ipv6_cidr_block                 = var.ipv6 ? cidrsubnet(aws_vpc.vpc.ipv6_cidr_block, 8, 11) : ""
-  assign_ipv6_address_on_creation = true
+  ipv6_cidr_block                                = var.ipv6 ? cidrsubnet(aws_vpc.vpc.ipv6_cidr_block, 8, 11) : ""
+  assign_ipv6_address_on_creation                = true
+  enable_resource_name_dns_aaaa_record_on_launch = var.ipv6
+  enable_resource_name_dns_a_record_on_launch    = true
 
   tags = {
     Name        = "${var.vpcname}-b"

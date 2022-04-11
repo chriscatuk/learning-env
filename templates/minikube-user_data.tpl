@@ -23,8 +23,6 @@ packages:
   - yum-cron
 
 runcmd:
-  -  #!/bin/bash -xe
-  - set -xe
   # Clone App repo 1/2: Settings
   - git_repo=https://github.com/chriscatuk/vpn-bastion.git
   - git_dir=/opt/github/vpn-bastion
@@ -74,8 +72,8 @@ runcmd:
   - python3 -m pip --no-cache-dir install ansible botocore boto3 openshift kubernetes
   - mkdir /etc/ansible
   - echo "[defaults]" ] > /etc/ansible/ansible.cfg
-  - echo "scp_if_ssh = True" ] >> /etc/ansible/ansible.cfg
-  - echo "interpreter_python=auto_silent" ] >> /etc/ansible/ansible.cfg
+  - echo "scp_if_ssh = True" >> /etc/ansible/ansible.cfg
+  - echo "interpreter_python=auto_silent" >> /etc/ansible/ansible.cfg
 
 power_state:
   delay: "now"
