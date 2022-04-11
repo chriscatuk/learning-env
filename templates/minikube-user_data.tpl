@@ -74,8 +74,8 @@ runcmd:
   - python3 -m pip --no-cache-dir install ansible botocore boto3 openshift kubernetes
   - mkdir /etc/ansible
   - echo "[defaults]" ] > /etc/ansible/ansible.cfg
-  - echo "scp_if_ssh = True" ] >> /etc/ansible/ansible.cfg
-  - echo "interpreter_python=auto_silent" ] >> /etc/ansible/ansible.cfg
+  - echo "scp_if_ssh = True" >> /etc/ansible/ansible.cfg
+  - echo "interpreter_python=auto_silent" >> /etc/ansible/ansible.cfg
 
 power_state:
   delay: "now"
