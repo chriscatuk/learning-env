@@ -24,10 +24,10 @@ packages:
 
 runcmd:
   # Clone App repo 1/2: Settings
-  - git_repo=https://github.com/chriscatuk/vpn-bastion.git
-  - git_dir=/opt/github/vpn-bastion
+  - git_repo=https://github.com/chriscatuk/learning-env.git
+  - git_dir=/opt/github/learning-env
   - git_branch=main
-  - docker_dir=$${git_dir}/docker-ipsec-vpn-server
+  - docker_dir=$${git_dir}/templates
   # Hostname
   - echo '127.0.0.1 ${hostname}' | sudo tee -a /etc/hosts
   - [sed, -i, -e, "s/HOSTNAME=.*/HOSTNAME=${hostname}/", /etc/sysconfig/network]
@@ -52,11 +52,11 @@ runcmd:
   # - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
   # - cd $${git_dir}
   # Terraform
-  - mkdir /opt/tfenv
-  - git clone --depth=1 https://github.com/tfutils/tfenv.git /opt/tfenv
-  - ln -s /opt/tfenv/bin/* /usr/local/bin
-  - tfenv install latest
-  - tfenv use latest
+  # - mkdir /opt/tfenv
+  # - git clone --depth=1 https://github.com/tfutils/tfenv.git /opt/tfenv
+  # - ln -s /opt/tfenv/bin/* /usr/local/bin
+  # - tfenv install latest
+  # - tfenv use latest
   # KUBECTL & HELM
   - mkdir /opt/kubectl
   - curl --fail --silent --show-error -o /opt/kubectl/kubectl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -69,11 +69,11 @@ runcmd:
   - curl --fail --silent --show-error -o /opt/minikube/minikube.rpm https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
   - rpm -Uvh /opt/minikube/minikube.rpm
   # Ansible
-  - python3 -m pip --no-cache-dir install ansible botocore boto3 openshift kubernetes
-  - mkdir /etc/ansible
-  - echo "[defaults]" ] > /etc/ansible/ansible.cfg
-  - echo "scp_if_ssh = True" >> /etc/ansible/ansible.cfg
-  - echo "interpreter_python=auto_silent" >> /etc/ansible/ansible.cfg
+  # - python3 -m pip --no-cache-dir install ansible botocore boto3 openshift kubernetes
+  # - mkdir /etc/ansible
+  # - echo "[defaults]" ] > /etc/ansible/ansible.cfg
+  # - echo "scp_if_ssh = True" >> /etc/ansible/ansible.cfg
+  # - echo "interpreter_python=auto_silent" >> /etc/ansible/ansible.cfg
 
 power_state:
   delay: "now"
