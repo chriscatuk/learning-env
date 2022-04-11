@@ -27,7 +27,7 @@ runcmd:
 # Clone repo 1/2: Settings
  - git_repo=https://github.com/repo
  - git_dir=/opt/github/jenkins_install
- - git_branch=master
+ - git_branch=main
  - docker_dir=$${git_dir}
 # Hostname
  - echo '127.0.0.1 ${hostname}' | sudo tee -a /etc/hosts

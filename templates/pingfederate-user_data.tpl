@@ -35,7 +35,7 @@ runcmd:
   # Clone repo 1/2: Settings
   - git_repo=https://github.com/pingidentity/pingidentity-devops-getting-started.git
   - git_dir=/opt/github/pingfederate
-  - git_branch=master
+  - git_branch=main
   - docker_dir=$${git_dir}/11-docker-compose/01-simple-stack/
   # Hostname
   - echo '127.0.0.1 ${hostname}' | sudo tee -a /etc/hosts
