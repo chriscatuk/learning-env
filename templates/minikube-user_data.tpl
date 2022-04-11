@@ -23,6 +23,7 @@ packages:
   - yum-cron
 
 runcmd:
+  -  #!/bin/bash -xe
   - set -xe
   # Clone App repo 1/2: Settings
   - git_repo=https://github.com/chriscatuk/vpn-bastion.git
@@ -60,7 +61,7 @@ runcmd:
   - tfenv use latest
   # KUBECTL & HELM
   - mkdir /opt/kubectl
-  - curl --fail --silent --show-error -o /opt/kubectl/kubectl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  - curl --fail --silent --show-error -o /opt/kubectl/kubectl -LO "https://dl.k8s.io/release/$$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
   - cp /opt/kubectl/kubectl /usr/local/bin/
   - rm -rf /opt/kubectl
   - chmod a+x /usr/local/bin/kubectl
