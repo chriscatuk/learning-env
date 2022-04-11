@@ -23,7 +23,6 @@ packages:
   - yum-cron
 
 runcmd:
-  -  #!/bin/bash -xe
   - set -xe
   # Clone App repo 1/2: Settings
   - git_repo=https://github.com/chriscatuk/vpn-bastion.git
