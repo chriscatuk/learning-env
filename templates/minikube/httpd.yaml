@@ -5,6 +5,7 @@ metadata:
   name: pod-httpd # the name displayed in the first column of 'kubectl get pods'
   labels:
     app: apache_webserver # this tag is added to help this object to link to the service object.
+    version: 1
 spec:
   containers:
     - name: cntr-httpd # name of the container that will reside in the pod

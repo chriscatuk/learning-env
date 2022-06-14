@@ -1,0 +1,22 @@
+# to access this service:
+# curl $(minikube service webapp --url)
+kind: Service
+apiVersion: v1
+metadata:
+  # Unique key of the Service instance
+  name: webapp
+spec:
+  selector:
+    # Loadbalance traffic across Pods matching
+    # which pods to be represented by this service
+    app: apache_webserver
+    version: "1"
+  # Create an HA proxy in the cloud provider
+  # with an External IP address - *Only supported
+  # by some cloud providers*
+  type: NodePort
+  ports:
+    # Accept traffic sent to port 80
+    - name: http
+      port: 80
+      nodePort: 30080
