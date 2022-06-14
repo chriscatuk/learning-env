@@ -1,3 +1,5 @@
+# to access this service:
+# curl $(minikube service webapp --url)
 apiVersion: v1
 kind: Pod
 metadata:
