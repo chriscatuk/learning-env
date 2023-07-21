@@ -22,6 +22,7 @@ packages:
   - stress
   - vim
   - docker
+  - unzip
 
 runcmd:
   # Clone VPN-Bastion repo 1/2: Settings
@@ -39,7 +40,7 @@ runcmd:
   - systemctl start docker
   - sudo usermod -aG docker ${username} && newgrp docker
   # Clone VPN-Bastion repo 2/2: Clone & Install
-  - git clone --depth=1 --branch $${git_branch} $${git_repo} $${git_dir}
+  - git clone --depth=1 --quiet --branch $${git_branch} $${git_repo} $${git_dir}
   - modprobe af_key
   - cd $${git_dir}
   # Uncomment to build locally instead of using Docker Hub latest version
@@ -51,7 +52,7 @@ runcmd:
   - echo 'AcceptEnv AWS_*' >> /etc/ssh/sshd_config
   # Terraform
   - mkdir /opt/tfenv
-  - git clone --depth=1 https://github.com/tfutils/tfenv.git /opt/tfenv
+  - git clone --quiet --depth=1 https://github.com/tfutils/tfenv.git /opt/tfenv
   - ln -s /opt/tfenv/bin/* /usr/local/bin
   - tfenv install latest
   - tfenv use latest

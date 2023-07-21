@@ -23,6 +23,7 @@ packages:
   - java-11-amazon-corretto
   - vim
   - docker
+  - unzip
 
 runcmd:
   # Clone App repo 1/2: Settings
