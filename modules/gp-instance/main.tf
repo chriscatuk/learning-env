@@ -42,8 +42,9 @@ data "aws_ami" "ami_amzn2" {
   owners      = ["amazon"]
 
   filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    name = "name"
+    #    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    values = ["al2023-ami-*-x86_64"]
   }
 }
 

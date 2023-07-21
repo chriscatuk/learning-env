@@ -5,8 +5,8 @@ hostname: ${hostname}
 
 users:
   - name: ${username}
-    groups: [wheel]
-    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    groups: wheel
+    sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
     ssh-authorized-keys:
       - ${keypubic}
@@ -17,10 +17,11 @@ packages:
   - mailx
   - git
   - python3
+  - python3-pip
   - jq
   - curl
   - stress
-  - yum-cron
+  - java-11-amazon-corretto
 
 runcmd:
   # Clone App repo 1/2: Settings
@@ -31,16 +32,6 @@ runcmd:
   # Hostname
   - echo '127.0.0.1 ${hostname}' | sudo tee -a /etc/hosts
   - [sed, -i, -e, "s/HOSTNAME=.*/HOSTNAME=${hostname}/", /etc/sysconfig/network]
-  # Yum settings for security updates
-  - yum -y update
-  - systemctl enable yum-cron
-  - sed -i -e 's/apply_updates = no/apply_updates = yes/g' /etc/yum/yum-cron.conf
-  - sed -i -e 's/update_cmd = default/update_cmd = security/g' /etc/yum/yum-cron-hourly.conf
-  - sed -i -e 's/apply_updates = no/apply_updates = yes/g' /etc/yum/yum-cron-hourly.conf
-  - sed -i -e 's/update_messages = no/update_messages = yes/g' /etc/yum/yum-cron-hourly.conf
-  - sed -i -e 's/download_updates = no/download_updates = yes/g' /etc/yum/yum-cron-hourly.conf
-  - sed -i -e 's/apply_updates = no/apply_updates = yes/g' /etc/yum/yum-cron-hourly.conf
-  - systemctl start yum-cron
   # Docker
   - amazon-linux-extras install docker -y
   - sudo curl -L https://github.com/docker/compose/releases/download/2.3.3/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
@@ -68,6 +59,8 @@ runcmd:
   - mkdir /opt/minikube
   - curl --fail --silent --show-error -o /opt/minikube/minikube.rpm https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
   - rpm -Uvh /opt/minikube/minikube.rpm
+  # K9S
+  - curl -sS https://webinstall.dev/k9s | bash
   # Ansible
   # - python3 -m pip --no-cache-dir install ansible botocore boto3 openshift kubernetes
   # - mkdir /etc/ansible
