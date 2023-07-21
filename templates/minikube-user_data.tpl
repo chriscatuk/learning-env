@@ -68,6 +68,11 @@ runcmd:
   # - echo "[defaults]" ] > /etc/ansible/ansible.cfg
   # - echo "scp_if_ssh = True" >> /etc/ansible/ansible.cfg
   # - echo "interpreter_python=auto_silent" >> /etc/ansible/ansible.cfg
+  # MariaDB
+  # - minikube start
+  # - kubectl run mariadb-test-pod --image=mariadb --env="MARIADB_ROOT_PASSWORD=secret"
+  # Run select commands
+  # - kubectl exec -it mariadb-test-pod -- mariadb -uroot -psecret -e "select current_user()"
 
 power_state:
   delay: "now"
