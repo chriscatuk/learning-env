@@ -19,8 +19,9 @@ packages:
   - python3
   - python3-pip
   - jq
-  - curl
   - stress
+  - vim
+  - docker
 
 runcmd:
   # Clone VPN-Bastion repo 1/2: Settings
@@ -32,7 +33,6 @@ runcmd:
   - echo '127.0.0.1 ${hostname}' | sudo tee -a /etc/hosts
   - [sed, -i, -e, "s/HOSTNAME=.*/HOSTNAME=${hostname}/", /etc/sysconfig/network]
   # Docker
-  - amazon-linux-extras install docker -y
   - sudo curl -L https://github.com/docker/compose/releases/download/2.3.3/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
   - sudo chmod +x /usr/bin/docker-compose
   - systemctl enable docker
