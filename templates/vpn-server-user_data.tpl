@@ -33,7 +33,7 @@ runcmd:
   - echo '127.0.0.1 ${hostname}' | sudo tee -a /etc/hosts
   - [sed, -i, -e, "s/HOSTNAME=.*/HOSTNAME=${hostname}/", /etc/sysconfig/network]
   # Docker
-  - sudo curl -L https://github.com/docker/compose/releases/download/2.3.3/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
+  - sudo curl --fail --silent --show-error  -L https://github.com/docker/compose/releases/download/v2.20.1/docker-compose-linux-x86_64 -o /usr/bin/docker-compose
   - sudo chmod +x /usr/bin/docker-compose
   - systemctl enable docker
   - systemctl start docker

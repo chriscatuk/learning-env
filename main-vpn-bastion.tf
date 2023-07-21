@@ -20,8 +20,8 @@ module "vpn-bastion" {
     username = var.username
   }
 
-  ipv6      = var.ipv6
-  username  = var.username
+  ipv6     = var.ipv6
+  username = var.username
 
   keypublic = var.keypublic
 
