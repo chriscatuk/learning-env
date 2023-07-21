@@ -1,18 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mariadb
+  name: steve
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mariadb
+      app: steve
   template:
     metadata:
       labels:
-        app: mariadb
+        app: steve
     spec:
       containers:
+        - name: debian
+          image: debian:unstable
+          command: ["/bin/sleep", "3650d"]
         - name: mariadb
           image: mariadb
           ports:
